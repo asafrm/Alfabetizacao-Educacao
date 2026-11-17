@@ -1,0 +1,198 @@
+/* ==========================================================
+   1. VARIÁVEIS E BASE
+   Paleta sóbria inspirada em portais educacionais:
+   azul-petróleo no cabeçalho, verde como cor de destaque.
+   ========================================================== */
+:root {
+    --cor-cabecalho: #0f3b4a;
+    --cor-destaque: #1f8a5b;
+    --cor-destaque-escura: #166a45;
+    --cor-fundo: #f4f6f8;
+    --cor-card: #ffffff;
+    --cor-texto: #1f2933;
+    --cor-texto-suave: #52606d;
+    --cor-borda: #d9e0e6;
+    --cor-erro: #b42318;
+    --cor-erro-fundo: #fef3f2;
+    --cor-aviso-fundo: #fff8e6;
+    --cor-aviso-borda: #f0c36d;
+    --raio: 10px;
+    --sombra: 0 2px 8px rgba(15, 59, 74, 0.08);
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: var(--cor-texto);
+    background: var(--cor-fundo);
+}
+
+h1, h2, h3 { line-height: 1.25; color: var(--cor-cabecalho); margin: 0 0 .6rem; }
+h2 { font-size: 1.6rem; }
+h3 { font-size: 1.15rem; }
+p { margin: 0 0 .9rem; }
+
+:focus-visible { outline: 3px solid #f2a900; outline-offset: 2px; }
+
+.container { width: 100%; max-width: 1080px; margin: 0 auto; padding: 0 1rem; }
+
+/* Link "pular para o conteúdo" (acessibilidade para teclado) */
+.pular {
+    position: absolute; left: -999px; top: 0;
+    background: #fff; color: var(--cor-cabecalho);
+    padding: .6rem 1rem; z-index: 100;
+}
+.pular:focus { left: 0; }
+
+/* Texto só para leitores de tela */
+.sr-only {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
+/* ==========================================================
+   2. CABEÇALHO E MENU SIMPLES
+   ========================================================== */
+.cabecalho { background: var(--cor-cabecalho); color: #fff; }
+.cabecalho .container {
+    display: flex; flex-wrap: wrap; align-items: center;
+    justify-content: space-between; gap: .5rem 1.5rem; padding-top: .9rem; padding-bottom: .9rem;
+}
+.marca { font-size: 1.25rem; font-weight: 700; color: #fff; text-decoration: none; }
+.marca span { color: #7fe0b3; }
+.menu { display: flex; flex-wrap: wrap; gap: .25rem 1.25rem; list-style: none; margin: 0; padding: 0; }
+.menu a {
+    color: #e6f1f4; text-decoration: none; padding: .35rem 0;
+    border-bottom: 2px solid transparent; font-size: .98rem;
+}
+.menu a:hover, .menu a:focus-visible { border-bottom-color: #7fe0b3; color: #fff; }
+
+/* ==========================================================
+   3. SEÇÃO INTRODUTÓRIA
+   ========================================================== */
+.intro { background: #fff; border-bottom: 1px solid var(--cor-borda); padding: 2rem 0 1.5rem; }
+.intro h1 { font-size: 1.9rem; }
+.intro p { max-width: 70ch; color: var(--cor-texto-suave); }
+
+section.secao { padding: 2rem 0; }
+
+/* ==========================================================
+   4. CARDS, FORMULÁRIO E BOTÕES
+   ========================================================== */
+.card {
+    background: var(--cor-card); border: 1px solid var(--cor-borda);
+    border-radius: var(--raio); box-shadow: var(--sombra); padding: 1.25rem;
+}
+
+.layout-diagnostico { display: grid; gap: 1.5rem; grid-template-columns: 1fr; }
+
+fieldset { border: 0; padding: 0; margin: 0 0 1.5rem; }
+legend { font-weight: 700; font-size: 1.1rem; color: var(--cor-cabecalho); padding: 0; margin-bottom: .75rem; }
+
+.grade-campos { display: grid; gap: 1rem; grid-template-columns: 1fr; }
+
+.campo { display: flex; flex-direction: column; }
+.campo label { font-weight: 600; margin-bottom: .25rem; }
+.ajuda { font-size: .93rem; color: var(--cor-texto-suave); margin: 0 0 .5rem; }
+
+input[type="text"], input[type="number"], select {
+    width: 100%; font: inherit; color: inherit;
+    padding: .65rem .75rem; background: #fff;
+    border: 1px solid #aeb9c2; border-radius: 8px;
+}
+input:focus, select:focus { border-color: var(--cor-destaque); }
+input[aria-invalid="true"], select[aria-invalid="true"] { border-color: var(--cor-erro); }
+
+.erro-campo { color: var(--cor-erro); font-size: .9rem; margin-top: .25rem; min-height: 1.2em; }
+
+/* Cada pergunta do diagnóstico fica em um bloco próprio */
+.pergunta { border: 1px solid var(--cor-borda); border-radius: 8px; padding: 1rem; margin-bottom: 1rem; background: #fbfcfd; }
+.pergunta label { font-weight: 600; display: block; margin-bottom: .25rem; }
+.pergunta .numero {
+    display: inline-block; background: var(--cor-destaque); color: #fff;
+    border-radius: 999px; width: 1.7rem; height: 1.7rem; text-align: center;
+    font-size: .9rem; line-height: 1.7rem; margin-right: .4rem; font-weight: 700;
+}
+
+.botao {
+    display: inline-block; font: inherit; font-weight: 700; cursor: pointer;
+    background: var(--cor-destaque); color: #fff; border: 0; border-radius: 8px;
+    padding: .8rem 1.5rem; text-decoration: none; text-align: center;
+}
+.botao:hover { background: var(--cor-destaque-escura); }
+.botao:disabled, .botao[aria-disabled="true"] { background: #9aa5ae; cursor: not-allowed; }
+.botao-secundario { background: #fff; color: var(--cor-cabecalho); border: 2px solid var(--cor-cabecalho); padding: .6rem 1.1rem; }
+.botao-secundario:hover { background: #eaf1f4; }
+.botao-bloco { width: 100%; }
+
+/* ==========================================================
+   5. ÁREA DE RESULTADO
+   ========================================================== */
+#resultado { min-height: 3rem; }
+
+.vazio { color: var(--cor-texto-suave); text-align: center; padding: 1.5rem .5rem; }
+
+.nivel-selo {
+    display: inline-block; background: #e3f5ec; color: var(--cor-destaque-escura);
+    font-weight: 700; padding: .25rem .8rem; border-radius: 999px; margin-bottom: .75rem;
+}
+.resultado-bloco { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--cor-borda); }
+.resultado-bloco h3 { font-size: 1rem; text-transform: uppercase; letter-spacing: .04em; color: var(--cor-texto-suave); }
+
+.mensagem-erro {
+    background: var(--cor-erro-fundo); border: 1px solid #f4b6b0; color: #7a1710;
+    border-radius: 8px; padding: 1rem;
+}
+.mensagem-aviso {
+    background: var(--cor-aviso-fundo); border: 1px solid var(--cor-aviso-borda);
+    border-radius: 8px; padding: .8rem 1rem; margin-bottom: 1rem; font-size: .95rem;
+}
+
+.carregando { display: flex; align-items: center; gap: .75rem; color: var(--cor-texto-suave); padding: 1rem 0; }
+.spinner {
+    width: 1.4rem; height: 1.4rem; border: 3px solid #cfd8de;
+    border-top-color: var(--cor-destaque); border-radius: 50%; animation: gira .8s linear infinite;
+}
+@keyframes gira { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .spinner { animation: none; } html { scroll-behavior: auto; } }
+
+/* ==========================================================
+   6. CARDS DE MATERIAIS DE APOIO
+   ========================================================== */
+.grade-materiais { display: grid; gap: 1.25rem; grid-template-columns: 1fr; }
+
+.material { display: flex; flex-direction: column; height: 100%; }
+.material p { color: var(--cor-texto-suave); flex: 1; }
+.material .etiqueta {
+    align-self: flex-start; font-size: .8rem; font-weight: 700; letter-spacing: .03em;
+    text-transform: uppercase; color: var(--cor-cabecalho); background: #e8eef2;
+    padding: .15rem .6rem; border-radius: 999px; margin-bottom: .6rem;
+}
+.material.recomendado { border-color: var(--cor-destaque); box-shadow: 0 0 0 2px rgba(31, 138, 91, .25); }
+.material .selo-recomendado { color: var(--cor-destaque-escura); font-weight: 700; font-size: .9rem; margin-bottom: .4rem; }
+
+/* ==========================================================
+   7. RODAPÉ
+   ========================================================== */
+.rodape { background: var(--cor-cabecalho); color: #cfe0e6; padding: 1.5rem 0; font-size: .92rem; margin-top: 2rem; }
+.rodape p { margin: 0 0 .4rem; }
+
+/* ==========================================================
+   8. RESPONSIVIDADE (celular → tablet → desktop)
+   ========================================================== */
+@media (min-width: 600px) {
+    .grade-campos { grid-template-columns: 2fr 1fr 2fr; }
+    .grade-materiais { grid-template-columns: repeat(2, 1fr); }
+    .botao-bloco { width: auto; }
+}
+@media (min-width: 960px) {
+    .layout-diagnostico { grid-template-columns: 1.3fr 1fr; align-items: start; }
+    .grade-materiais { grid-template-columns: repeat(3, 1fr); }
+    .coluna-resultado { position: sticky; top: 1rem; }
+}

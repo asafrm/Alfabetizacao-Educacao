@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sistema Especialista - Alfabetização</title>
+    <meta name="description" content="Diagnóstico de hipótese de escrita para pais e professores, com indicação de materiais de apoio.">
+
+    <!-- Estilos em arquivo separado (mantenha estilos.css na mesma pasta deste HTML) -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a class="pular" href="#diagnostico">Pular para o diagnóstico</a>
+
+    <!-- ===== Cabeçalho com menu simples ===== -->
+    <header class="cabecalho">
+        <div class="container">
+            <a class="marca" href="#inicio">Alfabetização<span>+</span></a>
+            <nav aria-label="Menu principal">
+                <ul class="menu">
+                    <li><a href="#inicio">Início</a></li>
+                    <li><a href="#diagnostico">Diagnóstico</a></li>
+                    <li><a href="#materiais">Materiais de apoio</a></li>
+                    <li><a href="#sobre">Sobre</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main id="inicio">
+        <!-- ===== Introdução ===== -->
+        <div class="intro">
+            <div class="container">
+                <h1>Sistema Especialista - Alfabetização</h1>
+                <p>Observe a escrita de uma criança, responda a algumas perguntas simples e descubra em que fase da alfabetização ela está, com sugestões de como ajudar.</p>
+            </div>
+        </div>
+
+        <!-- ===== Diagnóstico ===== -->
+        <section class="secao" id="diagnostico" aria-labelledby="titulo-diagnostico">
+            <div class="container">
+                <!-- Título original mantido -->
+                <h2 id="titulo-diagnostico">Diagnóstico de Hipótese de Escrita</h2>
+
+                <div class="layout-diagnostico">
+                    <!-- Coluna do formulário -->
+                    <div class="card">
+                        <form id="formulario" novalidate onsubmit="event.preventDefault(); enviarDiagnostico();">
+
+                            <!-- Dados da criança -->
+                            <fieldset>
+                                <legend>Dados da criança</legend>
+                                <div class="grade-campos">
+                                    <div class="campo">
+                                        <label for="nome_crianca">Nome</label>
+                                        <input type="text" id="nome_crianca" name="nome_crianca" autocomplete="off" maxlength="80" aria-describedby="erro_nome">
+                                        <div class="erro-campo" id="erro_nome" aria-live="polite"></div>
+                                    </div>
+                                    <div class="campo">
+                                        <label for="idade_crianca">Idade (anos)</label>
+                                        <input type="number" id="idade_crianca" name="idade_crianca" min="3" max="14" inputmode="numeric" aria-describedby="erro_idade">
+                                        <div class="erro-campo" id="erro_idade" aria-live="polite"></div>
+                                    </div>
+                                    <div class="campo">
+                                        <label for="serie_crianca">Série / ano escolar</label>
+                                        <select id="serie_crianca" name="serie_crianca" aria-describedby="erro_serie">
+                                            <option value="">Selecione...</option>
+                                            <option>Educação Infantil - Creche</option>
+                                            <option>Educação Infantil - Pré-escola</option>
+                                            <option>1º ano do Ensino Fundamental</option>
+                                            <option>2º ano do Ensino Fundamental</option>
+                                            <option>3º ano do Ensino Fundamental</option>
+                                            <option>4º ano do Ensino Fundamental</option>
+                                            <option>5º ano do Ensino Fundamental</option>
+                                            <option>Ainda não frequenta a escola</option>
+                                        </select>
+                                        <div class="erro-campo" id="erro_serie" aria-live="polite"></div>
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                            <!-- Perguntas do diagnóstico -->
+                            <fieldset>
+                                <legend>Observe a escrita da criança</legend>
+                                <p class="ajuda">Peça que a criança escreva uma palavra (por exemplo, "borboleta") sem ajuda e responda com base no que ela escreveu.</p>
+
+                                <div class="pergunta">
+                                    <label for="usa_letras"><span class="numero">1</span>A criança usou letras para escrever?</label>
+                                    <p class="ajuda">Observe se há letras (mesmo trocadas ou fora de ordem) ou apenas rabiscos, bolinhas e desenhos.</p>
+                                    <select id="usa_letras">
+                                        <option value="true">Sim</option>
+                                        <option value="false">Não (usou rabiscos/desenhos)</option>
+                                    </select>
+                                </div>
+
+                                <div class="pergunta">
+                                    <label for="uma_letra_por_silaba"><span class="numero">2</span>Ela usou uma letra para cada sílaba falada?</label>
+                                    <p class="ajuda">Fale a palavra devagar, em pedaços (bor-bo-le-ta). Veja se ela colocou uma letra para cada pedaço, como "OOEA".</p>
+                                    <select id="uma_letra_por_silaba">
+                                        <option value="false">Não</option>
+                                        <option value="true">Sim</option>
+                                    </select>
+                                </div>
+
+                                <div class="pergunta">
+                                    <label for="letras_correspondem_som"><span class="numero">3</span>As letras escolhidas combinam com os sons da palavra?</label>
+                                    <p class="ajuda">Por exemplo, usar "B" ou "O" em "BORBOLETA". Conta se a criança escolhe letras que realmente aparecem nos sons da palavra.</p>
+                                    <select id="letras_correspondem_som">
+                                        <option value="false">Não</option>
+                                        <option value="true">Sim</option>
+                                    </select>
+                                </div>
+
+                                <div class="pergunta">
+                                    <label for="mapeia_todos_fonemas"><span class="numero">4</span>Ela representou todos os sons da palavra?</label>
+                                    <p class="ajuda">Veja se cada som foi registrado (por exemplo, "BOBOLETA" ainda falha; "BORBOLETA" completa). Erros de ortografia ainda são esperados.</p>
+                                    <select id="mapeia_todos_fonemas">
+                                        <option value="false">Não</option>
+                                        <option value="true">Sim</option>
+                                    </select>
+                                </div>
+                            </fieldset>
+
+                            <!-- Botão original (onclick preservado) -->
+                            <button type="button" class="botao botao-bloco" id="botao_analisar" onclick="enviarDiagnostico()">Analisar Nível</button>
+                        </form>
+                    </div>
+
+                    <!-- Coluna do resultado -->
+                    <div class="coluna-resultado">
+                        <div class="card">
+                            <h3>Resultado da análise</h3>
+                            <!-- div original; aria-live avisa leitores de tela quando o resultado muda -->
+                            <div id="resultado" aria-live="polite">
+                                <p class="vazio">Preencha os dados e responda às perguntas. O resultado aparece aqui.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== Materiais de apoio ===== -->
+        <section class="secao" id="materiais" aria-labelledby="titulo-materiais">
+            <div class="container">
+                <h2 id="titulo-materiais">Materiais de apoio</h2>
+                <p>Sugestões para trabalhar a escrita em casa e na sala de aula. Depois da análise, os materiais mais indicados para o nível da criança ficam destacados.</p>
+                <div class="grade-materiais" id="grade_materiais"></div>
+            </div>
+        </section>
+
+        <!-- ===== Sobre ===== -->
+        <section class="secao" id="sobre" aria-labelledby="titulo-sobre">
+            <div class="container">
+                <div class="card">
+                    <h2 id="titulo-sobre">Sobre este sistema</h2>
+                    <p>A análise se baseia nas hipóteses de escrita descritas por Emilia Ferreiro e Ana Teberosky: pré-silábica, silábica, silábico-alfabética e alfabética. Ela é uma ajuda para a observação e não substitui a avaliação de um(a) professor(a) ou de profissionais da educação.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="rodape">
+        <div class="container">
+            <p>Sistema Especialista - Alfabetização. Ferramenta de apoio pedagógico.</p>
+            <p>Os dados informados são enviados apenas ao motor de inferência do sistema.</p>
+        </div>
+    </footer>
+
+    <script>
+        /* ==========================================================
+           MATERIAIS DE APOIO
+           Edite esta lista para trocar títulos, descrições e links.
+           - "niveis": hipóteses para as quais o material é recomendado.
+           - "link": deixe vazio ("") enquanto o endereço não estiver definido;
+             o botão ficará desativado como "Em breve".
+           ========================================================== */
+        const MATERIAIS = [
+            {
+                tipo: "Atividade",
+                titulo: "Jogo do nome próprio",
+                descricao: "Brincadeiras com o nome da criança e dos colegas: letras móveis, crachás e bingo de nomes para reconhecer letras.",
+                niveis: ["pré-silábica"],
+                link: ""
+            },
+            {
+                tipo: "Atividade",
+                titulo: "Palavras divididas em sílabas",
+                descricao: "Bater palmas e contar os pedaços das palavras, para perceber que a fala pode ser dividida em partes.",
+                niveis: ["pré-silábica", "silábica"],
+                link: ""
+            },
+            {
+                tipo: "Jogo",
+                titulo: "Caça-sons e rimas",
+                descricao: "Descobrir palavras que começam ou terminam com o mesmo som, ligando as letras aos sons que elas representam.",
+                niveis: ["silábica", "silábico-alfabética"],
+                link: ""
+            },
+            {
+                tipo: "Atividade",
+                titulo: "Ditado de palavras e frases curtas",
+                descricao: "Escrever palavras do dia a dia e conferir juntos, completando as letras que faltam em cada sílaba.",
+                niveis: ["silábico-alfabética", "alfabética"],
+                link: ""
+            },
+            {
+                tipo: "Referência",
+                titulo: "Base Nacional Comum Curricular (BNCC)",
+                descricao: "Documento oficial com as habilidades de leitura e escrita esperadas em cada etapa da escolarização.",
+                niveis: ["pré-silábica", "silábica", "silábico-alfabética", "alfabética"],
+                link: "http://basenacionalcomum.mec.gov.br/"
+            },
+        ];
+
+        /* ==========================================================
+           UTILITÁRIOS
+           ========================================================== */
+        const elResultado = document.getElementById('resultado');
+
+        // Evita injetar HTML vindo do backend na página
+        function esc(texto) {
+            const d = document.createElement('div');
+            d.textContent = texto == null ? '' : String(texto);
+            return d.innerHTML;
+        }
+
+        // Normaliza o nome da hipótese para comparar (minúsculas, sem acento)
+        function normalizar(t) {
+            return String(t || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        }
+
+        // Textos amigáveis para pais e professores, por hipótese
+        const EXPLICACOES = {
+            'pre-silabica': 'A criança ainda não relaciona a escrita aos sons da fala. É normal nessa fase: ela está descobrindo o que é escrever e para que serve.',
+            'silabica': 'A criança já percebe que a escrita representa a fala e coloca uma letra para cada sílaba. É um grande avanço.',
+            'silabico-alfabetica': 'A criança está em transição: em algumas sílabas usa uma letra e em outras já escreve mais de uma, aproximando-se da escrita convencional.',
+            'alfabetica': 'A criança já entende que as letras representam os sons e escreve de forma compreensível. Agora o foco passa a ser a ortografia e a fluência.'
+        };
+
+        /* ==========================================================
+           CARDS DE MATERIAIS
+           ========================================================== */
+        function renderizarMateriais(hipotese) {
+            const alvo = normalizar(hipotese);
+            const grade = document.getElementById('grade_materiais');
+            grade.innerHTML = MATERIAIS.map(m => {
+                const recomendado = alvo && m.niveis.some(n => normalizar(n) === alvo);
+                const acesso = m.link
+                    ? `<a class="botao botao-secundario" href="${esc(m.link)}" target="_blank" rel="noopener noreferrer">Acessar material<span class="sr-only"> (abre em nova aba)</span></a>`
+                    : `<button type="button" class="botao botao-secundario" disabled aria-disabled="true">Em breve</button>`;
+                return `
+                    <article class="card material${recomendado ? ' recomendado' : ''}">
+                        ${recomendado ? '<div class="selo-recomendado">★ Recomendado para este nível</div>' : ''}
+                        <span class="etiqueta">${esc(m.tipo)}</span>
+                        <h3>${esc(m.titulo)}</h3>
+                        <p>${esc(m.descricao)}</p>
+                        ${acesso}
+                    </article>`;
+            }).join('');
+        }
+        renderizarMateriais(null);
+
+        /* ==========================================================
+           VALIDAÇÃO DOS DADOS DA CRIANÇA
+           ========================================================== */
+        function validarCrianca() {
+            let ok = true;
+            const nome = document.getElementById('nome_crianca');
+            const idade = document.getElementById('idade_crianca');
+            const serie = document.getElementById('serie_crianca');
+
+            function marcar(campo, idErro, msg) {
+                document.getElementById(idErro).textContent = msg;
+                campo.setAttribute('aria-invalid', msg ? 'true' : 'false');
+                if (msg && ok) { campo.focus(); }
+                if (msg) { ok = false; }
+            }
+
+            marcar(nome, 'erro_nome', nome.value.trim() ? '' : 'Informe o nome da criança.');
+            const i = Number(idade.value);
+            marcar(idade, 'erro_idade', (idade.value && i >= 3 && i <= 14) ? '' : 'Informe uma idade entre 3 e 14 anos.');
+            marcar(serie, 'erro_serie', serie.value ? '' : 'Selecione a série ou o ano.');
+            return ok;
+        }
+
+        /* ==========================================================
+           LÓGICA DE EXEMPLO (apenas demonstração)
+           Usada somente se o backend não responder. Substitui o motor
+           de inferência real; NÃO é um diagnóstico oficial.
+           ========================================================== */
+        function analisarLocalmente(p) {
+            let hipotese, bncc, intervencao;
+            if (!p.usa_letras || !p.uma_letra_por_silaba) {
+                hipotese = 'Pré-silábica';
+                bncc = 'EF01LP01 e EF01LP02: reconhecer que textos são lidos e escritos da esquerda para a direita e escrever o próprio nome.';
+                intervencao = 'Trabalhar o nome próprio, o alfabeto móvel e a diferença entre letras, números e desenhos.';
+            } else if (!p.letras_correspondem_som) {
+                hipotese = 'Silábica';
+                bncc = 'EF01LP05 e EF01LP06: perceber a relação entre sons e letras e segmentar palavras em sílabas.';
+                intervencao = 'Atividades de contagem de sílabas, rimas e comparação de palavras que começam com o mesmo som.';
+            } else if (!p.mapeia_todos_fonemas) {
+                hipotese = 'Silábico-alfabética';
+                bncc = 'EF01LP07 e EF01LP08: identificar fonemas e relacioná-los às letras que os representam.';
+                intervencao = 'Ditados de palavras simples, com apoio para completar as letras que faltam em cada sílaba.';
+            } else {
+                hipotese = 'Alfabética';
+                bncc = 'EF12LP01 e EF02LP02: ler e escrever palavras e frases, avançando para a ortografia.';
+                intervencao = 'Produção de frases e pequenos textos, com foco em ortografia, pontuação e leitura fluente.';
+            }
+            return { hipotese, bncc, intervencao };
+        }
+
+        /* ==========================================================
+           EXIBIÇÃO DO RESULTADO E DAS MENSAGENS
+           ========================================================== */
+        function mostrarResultado(dados, crianca, avisoExemplo) {
+            const chave = normalizar(dados.hipotese);
+            const explicacao = EXPLICACOES[chave] || 'Veja abaixo as habilidades e as sugestões de intervenção indicadas pelo sistema.';
+            elResultado.innerHTML = `
+                ${avisoExemplo ? '<div class="mensagem-aviso" role="status"><strong>Resultado de demonstração.</strong> Não foi possível falar com o sistema; este resultado usa uma lógica simples de exemplo e não deve ser usado como diagnóstico.</div>' : ''}
+                <p><strong>${esc(crianca.nome)}</strong> (${esc(crianca.idade)} anos, ${esc(crianca.serie)})</p>
+                <span class="nivel-selo">Hipótese: ${esc(dados.hipotese)}</span>
+                <p>${esc(explicacao)}</p>
+                <div class="resultado-bloco"><h3>Habilidades BNCC</h3><p>${esc(dados.bncc)}</p></div>
+                <div class="resultado-bloco"><h3>Intervenção sugerida</h3><p>${esc(dados.intervencao)}</p></div>
+                <div class="resultado-bloco"><a class="botao botao-secundario" href="#materiais">Ver materiais de apoio</a></div>`;
+            renderizarMateriais(dados.hipotese);
+        }
+
+        function mostrarErro(msg) {
+            elResultado.innerHTML = `<div class="mensagem-erro" role="alert">${esc(msg)}</div>`;
+        }
+
+        /* ==========================================================
+           ENVIO DO DIAGNÓSTICO
+           ========================================================== */
+        // Mude para false para NUNCA exibir o resultado de exemplo quando o backend falhar.
+        const USAR_EXEMPLO_SE_BACKEND_FALHAR = true;
+
+        async function enviarDiagnostico() {
+            if (!validarCrianca()) {
+                mostrarErro('Confira os dados da criança e tente novamente.');
+                return;
+            }
+
+            // Monta o JSON com as respostas (formato original preservado)
+            const payload = {
+                usa_letras: document.getElementById('usa_letras').value === 'true',
+                uma_letra_por_silaba: document.getElementById('uma_letra_por_silaba').value === 'true',
+                // Campos da matriz agora preenchidos pelo formulário
+                letras_correspondem_som: document.getElementById('letras_correspondem_som').value === 'true',
+                mapeia_todos_fonemas: document.getElementById('mapeia_todos_fonemas').value === 'true',
+                // Dados da criança (novo bloco no payload)
+                crianca: {
+                    nome: document.getElementById('nome_crianca').value.trim(),
+                    idade: Number(document.getElementById('idade_crianca').value),
+                    serie: document.getElementById('serie_crianca').value
+                }
+            };
+
+            const botao = document.getElementById('botao_analisar');
+            botao.disabled = true;
+            elResultado.innerHTML = '<div class="carregando"><div class="spinner" aria-hidden="true"></div><span>Analisando as respostas...</span></div>';
+
+            try {
+                /* ======================================================
+                   PONTO DE INTEGRAÇÃO COM O BACKEND
+                   O motor de inferência recebe o payload em POST /motor e
+                   deve devolver JSON com: { hipotese, bncc, intervencao }.
+                   Ajuste a URL aqui se o backend usar outro endereço.
+                   ====================================================== */
+                const resposta = await fetch('/motor', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(payload)
+                });
+
+                if (!resposta.ok) {
+                    throw new Error('Resposta inesperada do servidor (código ' + resposta.status + ').');
+                }
+
+                const dados = await resposta.json();
+                if (!dados || !dados.hipotese) {
+                    throw new Error('A resposta do servidor veio incompleta.');
+                }
+
+                // Exibe o retorno do motor na tela
+                mostrarResultado(dados, payload.crianca, false);
+            } catch (erro) {
+                console.error('Falha ao consultar /motor:', erro);
+                if (USAR_EXEMPLO_SE_BACKEND_FALHAR) {
+                    // Lógica de exemplo, sinalizada claramente ao usuário
+                    mostrarResultado(analisarLocalmente(payload), payload.crianca, true);
+                } else {
+                    mostrarErro('Não foi possível concluir a análise agora. Verifique sua conexão e tente novamente em instantes.');
+                }
+            } finally {
+                botao.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>
