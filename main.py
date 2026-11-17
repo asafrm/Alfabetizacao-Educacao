@@ -2,14 +2,13 @@ import sqlite3
 import json
 
 def diagnosticar_hipotese(payload_respostas):
-    # O payload_respostas é um JSON vindo da interface
-    usa_letras = payload_respostas.get("usa_letras") # Booleano
-    uma_letra_por_silaba = payload_respostas.get("uma_letra_por_silaba") # Booleano
-    tem_valor_sonoro = payload_respostas.get("tem_valor_sonoro") # Booleano
-    mapeia_todos_fonemas = payload_respostas.get("mapeia_todos_fonemas") # Booleano
-    oscila_escrita = payload_respostas.get("oscila_escrita") # Booleano
+   
+    usa_letras = payload_respostas.get("usa_letras") 
+    uma_letra_por_silaba = payload_respostas.get("uma_letra_por_silaba") 
+    tem_valor_sonoro = payload_respostas.get("tem_valor_sonoro") 
+    mapeia_todos_fonemas = payload_respostas.get("mapeia_todos_fonemas") 
+    oscila_escrita = payload_respostas.get("oscila_escrita") 
 
-    # Motor de Regras (If-Then baseado na matriz)
     if mapeia_todos_fonemas:
         hipotese_resultado = "Alfabética"
     elif oscila_escrita:
@@ -19,7 +18,6 @@ def diagnosticar_hipotese(payload_respostas):
     elif uma_letra_por_silaba and not tem_valor_sonoro:
         hipotese_resultado = "Silábica sem valor sonoro"
     else:
-        # Engloba garatujas, letras aleatórias e realismo nominal
         hipotese_resultado = "Pré-silábica"
 
     return buscar_dados_intervencao(hipotese_resultado)
