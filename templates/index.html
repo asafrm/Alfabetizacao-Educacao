@@ -285,33 +285,6 @@
         }
 
         /* ==========================================================
-           LÓGICA DE EXEMPLO (apenas demonstração)
-           Usada somente se o backend não responder. Substitui o motor
-           de inferência real; NÃO é um diagnóstico oficial.
-           ========================================================== */
-        function analisarLocalmente(p) {
-            let hipotese, bncc, intervencao;
-            if (!p.usa_letras || !p.uma_letra_por_silaba) {
-                hipotese = 'Pré-silábica';
-                bncc = 'EF01LP01 e EF01LP02: reconhecer que textos são lidos e escritos da esquerda para a direita e escrever o próprio nome.';
-                intervencao = 'Trabalhar o nome próprio, o alfabeto móvel e a diferença entre letras, números e desenhos.';
-            } else if (!p.letras_correspondem_som) {
-                hipotese = 'Silábica';
-                bncc = 'EF01LP05 e EF01LP06: perceber a relação entre sons e letras e segmentar palavras em sílabas.';
-                intervencao = 'Atividades de contagem de sílabas, rimas e comparação de palavras que começam com o mesmo som.';
-            } else if (!p.mapeia_todos_fonemas) {
-                hipotese = 'Silábico-alfabética';
-                bncc = 'EF01LP07 e EF01LP08: identificar fonemas e relacioná-los às letras que os representam.';
-                intervencao = 'Ditados de palavras simples, com apoio para completar as letras que faltam em cada sílaba.';
-            } else {
-                hipotese = 'Alfabética';
-                bncc = 'EF12LP01 e EF02LP02: ler e escrever palavras e frases, avançando para a ortografia.';
-                intervencao = 'Produção de frases e pequenos textos, com foco em ortografia, pontuação e leitura fluente.';
-            }
-            return { hipotese, bncc, intervencao };
-        }
-
-        /* ==========================================================
            EXIBIÇÃO DO RESULTADO E DAS MENSAGENS
            ========================================================== */
         function mostrarResultado(dados, crianca, avisoExemplo) {
@@ -389,12 +362,7 @@
                 mostrarResultado(dados, payload.crianca, false);
             } catch (erro) {
                 console.error('Falha ao consultar /motor:', erro);
-                if (USAR_EXEMPLO_SE_BACKEND_FALHAR) {
-                    // Lógica de exemplo, sinalizada claramente ao usuário
-                    mostrarResultado(analisarLocalmente(payload), payload.crianca, true);
-                } else {
-                    mostrarErro('Não foi possível concluir a análise agora. Verifique sua conexão e tente novamente em instantes.');
-                }
+                mostrarErro('Não foi possível se comunicar com o sistema. Verifique se o servidor Python está rodando e tente novamente.');
             } finally {
                 botao.disabled = false;
             }
