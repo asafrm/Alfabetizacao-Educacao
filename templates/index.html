@@ -5,14 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Sistema Especialista - Alfabetização</title>
     <meta name="description" content="Diagnóstico de hipótese de escrita para pais e professores, com indicação de materiais de apoio.">
-
-    <!-- Estilos em arquivo separado (mantenha estilos.css na mesma pasta deste HTML) -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <a class="pular" href="#diagnostico">Pular para o diagnóstico</a>
 
-    <!-- ===== Cabeçalho com menu simples ===== -->
     <header class="cabecalho">
         <div class="container">
             <a class="marca" href="#inicio">Alfabetização<span>+</span></a>
@@ -28,26 +25,53 @@
     </header>
 
     <main id="inicio">
-        <!-- ===== Introdução ===== -->
         <div class="intro">
             <div class="container">
                 <h1>Sistema Especialista - Alfabetização</h1>
-                <p>Observe a escrita de uma criança, responda a algumas perguntas simples e descubra em que fase da alfabetização ela está, com sugestões de como ajudar.</p>
+                <p>Aplique a sondagem de escrita no papel, transcreva exatamente como a criança escreveu e receba a hipótese de alfabetização com intervenções alinhadas à BNCC.</p>
             </div>
         </div>
 
-        <!-- ===== Diagnóstico ===== -->
         <section class="secao" id="diagnostico" aria-labelledby="titulo-diagnostico">
             <div class="container">
-                <!-- Título original mantido -->
-                <h2 id="titulo-diagnostico">Diagnóstico de Hipótese de Escrita</h2>
+                <h2 id="titulo-diagnostico">Sondagem de Escrita (Psicogênese)</h2>
 
-                <div class="layout-diagnostico">
-                    <!-- Coluna do formulário -->
+                <!-- ETAPA 1: ORIENTAÇÕES AO PROFESSOR -->
+                <div id="tela_orientacoes" class="card">
+                    <h3>Orientações antes de aplicar o teste</h3>
+                    <p>Para garantir um diagnóstico fiel, aplique o ditado em uma folha de papel sulfite (sem pauta) seguindo estas recomendações:</p>
+                    <ul>
+                        <li><strong>Ambiente:</strong> Realize o teste individualmente, em local tranquilo e sem alfabetos ou cartazes visíveis.</li>
+                        <li><strong>Ditado natural:</strong> Fale cada palavra normalmente, sem separar sílabas de forma exagerada e sem soletrar.</li>
+                        <li><strong>Sem correções:</strong> Não corrija a criança durante o teste; diga apenas para escrever "do jeito que ela acha que é".</li>
+                        <li><strong>Leitura apontada:</strong> Após cada palavra, peça que ela leia o que escreveu passando o dedo por baixo.</li>
+                    </ul>
+
+                    <div class="resultado-bloco">
+                        <h3>Palavras para ditar (Campo Semântico: Animais)</h3>
+                        <p>Dite na ordem abaixo (da maior para a menor) e finalize com a frase:</p>
+                        <ol>
+                            <li><strong>BORBOLETA</strong> (Polissílaba — 4 sílabas)</li>
+                            <li><strong>CAVALO</strong> (Trissílaba — 3 sílabas)</li>
+                            <li><strong>GATO</strong> (Dissílaba — 2 sílabas)</li>
+                            <li><strong>RÃ</strong> (Monossílaba — 1 sílaba)</li>
+                            <li><em>Frase:</em> <strong>O GATO BEBEU LEITE.</strong></li>
+                        </ol>
+                    </div>
+
+                    <button type="button" class="botao" style="margin-top: 1rem;" onclick="irParaTranscricao()">
+                        Já apliquei no papel — Ir para a Transcrição
+                    </button>
+                </div>
+
+                <!-- ETAPA 2: FORMULÁRIO DE TRANSCRIÇÃO -->
+                <div id="tela_transcricao" class="layout-diagnostico" style="display: none;">
                     <div class="card">
-                        <form id="formulario" novalidate onsubmit="event.preventDefault(); enviarDiagnostico();">
+                        <button type="button" class="botao botao-secundario" style="margin-bottom: 1.25rem;" onclick="voltarOrientacoes()">
+                            ← Ver orientações novamente
+                        </button>
 
-                            <!-- Dados da criança -->
+                        <form id="formulario" novalidate onsubmit="event.preventDefault(); enviarDiagnostico();">
                             <fieldset>
                                 <legend>Dados da criança</legend>
                                 <div class="grade-campos">
@@ -79,60 +103,49 @@
                                 </div>
                             </fieldset>
 
-                            <!-- Perguntas do diagnóstico -->
                             <fieldset>
-                                <legend>Observe a escrita da criança</legend>
-                                <p class="ajuda">Peça que a criança escreva uma palavra (por exemplo, "borboleta") sem ajuda e responda com base no que ela escreveu.</p>
+                                <legend>Transcrição exata do papel</legend>
+                                <p class="ajuda">Digite exatamente as letras que a criança escreveu (incluindo trocas ou faltas). Se ela fez apenas rabiscos/desenhos, marque a opção abaixo.</p>
 
                                 <div class="pergunta">
-                                    <label for="usa_letras"><span class="numero">1</span>A criança usou letras para escrever?</label>
-                                    <p class="ajuda">Observe se há letras (mesmo trocadas ou fora de ordem) ou apenas rabiscos, bolinhas e desenhos.</p>
-                                    <select id="usa_letras">
-                                        <option value="true">Sim</option>
-                                        <option value="false">Não (usou rabiscos/desenhos)</option>
-                                    </select>
+                                    <label>
+                                        <input type="checkbox" id="apenas_rabiscos" onchange="alternarCamposPalavras()">
+                                        A criança fez apenas garatujas, rabiscos ou desenhos (não usou letras)
+                                    </label>
                                 </div>
 
-                                <div class="pergunta">
-                                    <label for="uma_letra_por_silaba"><span class="numero">2</span>Ela usou uma letra para cada sílaba falada?</label>
-                                    <p class="ajuda">Fale a palavra devagar, em pedaços (bor-bo-le-ta). Veja se ela colocou uma letra para cada pedaço, como "OOEA".</p>
-                                    <select id="uma_letra_por_silaba">
-                                        <option value="false">Não</option>
-                                        <option value="true">Sim</option>
-                                    </select>
-                                </div>
+                                <div id="bloco_palavras">
+                                    <div class="pergunta">
+                                        <label for="p_borboleta"><span class="numero">1</span>Como escreveu BORBOLETA?</label>
+                                        <input type="text" id="p_borboleta" autocomplete="off" spellcheck="false" placeholder="Ex: BBOA, BOBOLETA, XTMZ...">
+                                    </div>
 
-                                <div class="pergunta">
-                                    <label for="letras_correspondem_som"><span class="numero">3</span>As letras escolhidas combinam com os sons da palavra?</label>
-                                    <p class="ajuda">Por exemplo, usar "B" ou "O" em "BORBOLETA". Conta se a criança escolhe letras que realmente aparecem nos sons da palavra.</p>
-                                    <select id="letras_correspondem_som">
-                                        <option value="false">Não</option>
-                                        <option value="true">Sim</option>
-                                    </select>
-                                </div>
+                                    <div class="pergunta">
+                                        <label for="p_cavalo"><span class="numero">2</span>Como escreveu CAVALO?</label>
+                                        <input type="text" id="p_cavalo" autocomplete="off" spellcheck="false" placeholder="Ex: CVO, KAVALU, AAO...">
+                                    </div>
 
-                                <div class="pergunta">
-                                    <label for="mapeia_todos_fonemas"><span class="numero">4</span>Ela representou todos os sons da palavra?</label>
-                                    <p class="ajuda">Veja se cada som foi registrado (por exemplo, "BOBOLETA" ainda falha; "BORBOLETA" completa). Erros de ortografia ainda são esperados.</p>
-                                    <select id="mapeia_todos_fonemas">
-                                        <option value="false">Não</option>
-                                        <option value="true">Sim</option>
-                                    </select>
+                                    <div class="pergunta">
+                                        <label for="p_gato"><span class="numero">3</span>Como escreveu GATO?</label>
+                                        <input type="text" id="p_gato" autocomplete="off" spellcheck="false" placeholder="Ex: GO, AO, GATU...">
+                                    </div>
+
+                                    <div class="pergunta">
+                                        <label for="p_ra"><span class="numero">4</span>Como escreveu RÃ?</label>
+                                        <input type="text" id="p_ra" autocomplete="off" spellcheck="false" placeholder="Ex: A, RA, RAM...">
+                                    </div>
                                 </div>
                             </fieldset>
 
-                            <!-- Botão original (onclick preservado) -->
                             <button type="button" class="botao botao-bloco" id="botao_analisar" onclick="enviarDiagnostico()">Analisar Nível</button>
                         </form>
                     </div>
 
-                    <!-- Coluna do resultado -->
                     <div class="coluna-resultado">
                         <div class="card">
                             <h3>Resultado da análise</h3>
-                            <!-- div original; aria-live avisa leitores de tela quando o resultado muda -->
                             <div id="resultado" aria-live="polite">
-                                <p class="vazio">Preencha os dados e responda às perguntas. O resultado aparece aqui.</p>
+                                <p class="vazio">Transcreva as palavras escritas pela criança e clique em Analisar Nível.</p>
                             </div>
                         </div>
                     </div>
@@ -140,7 +153,6 @@
             </div>
         </section>
 
-        <!-- ===== Materiais de apoio ===== -->
         <section class="secao" id="materiais" aria-labelledby="titulo-materiais">
             <div class="container">
                 <h2 id="titulo-materiais">Materiais de apoio</h2>
@@ -149,12 +161,11 @@
             </div>
         </section>
 
-        <!-- ===== Sobre ===== -->
         <section class="secao" id="sobre" aria-labelledby="titulo-sobre">
             <div class="container">
                 <div class="card">
                     <h2 id="titulo-sobre">Sobre este sistema</h2>
-                    <p>A análise se baseia nas hipóteses de escrita descritas por Emilia Ferreiro e Ana Teberosky: pré-silábica, silábica, silábico-alfabética e alfabética. Ela é uma ajuda para a observação e não substitui a avaliação de um(a) professor(a) ou de profissionais da educação.</p>
+                    <p>A análise se baseia nas hipóteses de escrita descritas por Emilia Ferreiro e Ana Teberosky: pré-silábica, silábica sem valor sonoro, silábica com valor sonoro, silábico-alfabética e alfabética. Ela é uma ajuda para a observação e não substitui a avaliação de um(a) professor(a) ou de profissionais da educação.</p>
                 </div>
             </div>
         </section>
@@ -168,13 +179,6 @@
     </footer>
 
     <script>
-        /* ==========================================================
-           MATERIAIS DE APOIO
-           Edite esta lista para trocar títulos, descrições e links.
-           - "niveis": hipóteses para as quais o material é recomendado.
-           - "link": deixe vazio ("") enquanto o endereço não estiver definido;
-             o botão ficará desativado como "Em breve".
-           ========================================================== */
         const MATERIAIS = [
             {
                 tipo: "Atividade",
@@ -187,14 +191,14 @@
                 tipo: "Atividade",
                 titulo: "Palavras divididas em sílabas",
                 descricao: "Bater palmas e contar os pedaços das palavras, para perceber que a fala pode ser dividida em partes.",
-                niveis: ["pré-silábica", "silábica"],
+                niveis: ["pré-silábica", "silábica sem valor sonoro", "silábica com valor sonoro"],
                 link: ""
             },
             {
                 tipo: "Jogo",
                 titulo: "Caça-sons e rimas",
                 descricao: "Descobrir palavras que começam ou terminam com o mesmo som, ligando as letras aos sons que elas representam.",
-                niveis: ["silábica", "silábico-alfabética"],
+                niveis: ["silábica sem valor sonoro", "silábica com valor sonoro", "silábico-alfabética"],
                 link: ""
             },
             {
@@ -208,39 +212,46 @@
                 tipo: "Referência",
                 titulo: "Base Nacional Comum Curricular (BNCC)",
                 descricao: "Documento oficial com as habilidades de leitura e escrita esperadas em cada etapa da escolarização.",
-                niveis: ["pré-silábica", "silábica", "silábico-alfabética", "alfabética"],
+                niveis: ["pré-silábica", "silábica sem valor sonoro", "silábica com valor sonoro", "silábico-alfabética", "alfabética"],
                 link: "http://basenacionalcomum.mec.gov.br/"
             },
         ];
 
-        /* ==========================================================
-           UTILITÁRIOS
-           ========================================================== */
         const elResultado = document.getElementById('resultado');
 
-        // Evita injetar HTML vindo do backend na página
         function esc(texto) {
             const d = document.createElement('div');
             d.textContent = texto == null ? '' : String(texto);
             return d.innerHTML;
         }
 
-        // Normaliza o nome da hipótese para comparar (minúsculas, sem acento)
         function normalizar(t) {
             return String(t || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
         }
 
-        // Textos amigáveis para pais e professores, por hipótese
         const EXPLICACOES = {
             'pre-silabica': 'A criança ainda não relaciona a escrita aos sons da fala. É normal nessa fase: ela está descobrindo o que é escrever e para que serve.',
-            'silabica': 'A criança já percebe que a escrita representa a fala e coloca uma letra para cada sílaba. É um grande avanço.',
+            'silabica sem valor sonoro': 'A criança já percebe que a escrita representa partes da fala (uma letra por sílaba), mas ainda não escolhe letras que correspondem aos sons reais.',
+            'silabica com valor sonoro': 'A criança já coloca uma letra para cada sílaba usando letras que combinam com os sons da palavra. É um grande avanço.',
             'silabico-alfabetica': 'A criança está em transição: em algumas sílabas usa uma letra e em outras já escreve mais de uma, aproximando-se da escrita convencional.',
             'alfabetica': 'A criança já entende que as letras representam os sons e escreve de forma compreensível. Agora o foco passa a ser a ortografia e a fluência.'
         };
 
-        /* ==========================================================
-           CARDS DE MATERIAIS
-           ========================================================== */
+        function irParaTranscricao() {
+            document.getElementById('tela_orientacoes').style.display = 'none';
+            document.getElementById('tela_transcricao').style.display = 'grid';
+        }
+
+        function voltarOrientacoes() {
+            document.getElementById('tela_transcricao').style.display = 'none';
+            document.getElementById('tela_orientacoes').style.display = 'block';
+        }
+
+        function alternarCamposPalavras() {
+            const rabiscos = document.getElementById('apenas_rabiscos').checked;
+            document.getElementById('bloco_palavras').style.display = rabiscos ? 'none' : 'block';
+        }
+
         function renderizarMateriais(hipotese) {
             const alvo = normalizar(hipotese);
             const grade = document.getElementById('grade_materiais');
@@ -261,9 +272,6 @@
         }
         renderizarMateriais(null);
 
-        /* ==========================================================
-           VALIDAÇÃO DOS DADOS DA CRIANÇA
-           ========================================================== */
         function validarCrianca() {
             let ok = true;
             const nome = document.getElementById('nome_crianca');
@@ -284,14 +292,10 @@
             return ok;
         }
 
-        /* ==========================================================
-           EXIBIÇÃO DO RESULTADO E DAS MENSAGENS
-           ========================================================== */
-        function mostrarResultado(dados, crianca, avisoExemplo) {
+        function mostrarResultado(dados, crianca) {
             const chave = normalizar(dados.hipotese);
             const explicacao = EXPLICACOES[chave] || 'Veja abaixo as habilidades e as sugestões de intervenção indicadas pelo sistema.';
             elResultado.innerHTML = `
-                ${avisoExemplo ? '<div class="mensagem-aviso" role="status"><strong>Resultado de demonstração.</strong> Não foi possível falar com o sistema; este resultado usa uma lógica simples de exemplo e não deve ser usado como diagnóstico.</div>' : ''}
                 <p><strong>${esc(crianca.nome)}</strong> (${esc(crianca.idade)} anos, ${esc(crianca.serie)})</p>
                 <span class="nivel-selo">Hipótese: ${esc(dados.hipotese)}</span>
                 <p>${esc(explicacao)}</p>
@@ -305,26 +309,20 @@
             elResultado.innerHTML = `<div class="mensagem-erro" role="alert">${esc(msg)}</div>`;
         }
 
-        /* ==========================================================
-           ENVIO DO DIAGNÓSTICO
-           ========================================================== */
-        // Mude para false para NUNCA exibir o resultado de exemplo quando o backend falhar.
-        const USAR_EXEMPLO_SE_BACKEND_FALHAR = true;
-
         async function enviarDiagnostico() {
             if (!validarCrianca()) {
                 mostrarErro('Confira os dados da criança e tente novamente.');
                 return;
             }
 
-            // Monta o JSON com as respostas (formato original preservado)
             const payload = {
-                usa_letras: document.getElementById('usa_letras').value === 'true',
-                uma_letra_por_silaba: document.getElementById('uma_letra_por_silaba').value === 'true',
-                // Campos da matriz agora preenchidos pelo formulário
-                letras_correspondem_som: document.getElementById('letras_correspondem_som').value === 'true',
-                mapeia_todos_fonemas: document.getElementById('mapeia_todos_fonemas').value === 'true',
-                // Dados da criança (novo bloco no payload)
+                apenas_rabiscos: document.getElementById('apenas_rabiscos').checked,
+                palavras: {
+                    borboleta: document.getElementById('p_borboleta').value.trim(),
+                    cavalo: document.getElementById('p_cavalo').value.trim(),
+                    gato: document.getElementById('p_gato').value.trim(),
+                    ra: document.getElementById('p_ra').value.trim()
+                },
                 crianca: {
                     nome: document.getElementById('nome_crianca').value.trim(),
                     idade: Number(document.getElementById('idade_crianca').value),
@@ -337,12 +335,6 @@
             elResultado.innerHTML = '<div class="carregando"><div class="spinner" aria-hidden="true"></div><span>Analisando as respostas...</span></div>';
 
             try {
-                /* ======================================================
-                   PONTO DE INTEGRAÇÃO COM O BACKEND
-                   O motor de inferência recebe o payload em POST /motor e
-                   deve devolver JSON com: { hipotese, bncc, intervencao }.
-                   Ajuste a URL aqui se o backend usar outro endereço.
-                   ====================================================== */
                 const resposta = await fetch('/motor', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
@@ -358,8 +350,7 @@
                     throw new Error('A resposta do servidor veio incompleta.');
                 }
 
-                // Exibe o retorno do motor na tela
-                mostrarResultado(dados, payload.crianca, false);
+                mostrarResultado(dados, payload.crianca);
             } catch (erro) {
                 console.error('Falha ao consultar /motor:', erro);
                 mostrarErro('Não foi possível se comunicar com o sistema. Verifique se o servidor Python está rodando e tente novamente.');
