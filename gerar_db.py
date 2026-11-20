@@ -1,7 +1,8 @@
 import sqlite3
 
-# O seu script SQL exato
 script_sql = """
+DROP TABLE IF EXISTS niveis_alfabetizacao;
+
 CREATE TABLE niveis_alfabetizacao (
     id_nivel INTEGER PRIMARY KEY AUTOINCREMENT,
     hipotese TEXT NOT NULL,
@@ -12,18 +13,17 @@ CREATE TABLE niveis_alfabetizacao (
 
 INSERT INTO niveis_alfabetizacao (hipotese, habilidade_bncc, intervencao_pedagogica, indicador_avanco)
 VALUES 
-('Pré-silábica', '(EI03EF09), (EI03EF01)', 'Trabalhar bingo de letras, alfabeto móvel...', 'Abandona o Realismo Nominal'),
-('Silábica sem valor sonoro', '(EI03EF09)', 'Bater palmas para cada sílaba...', 'Utiliza vogais pertinentes à sílaba'),
-('Silábica com valor sonoro', '(EI03EF03)', 'Auto ditado com alfabeto móvel...', 'Percebe necessidade de mais letras por sílaba'),
-('Silábico-alfabética', '(EI03EF07)', 'Cartão conflito para completar letras...', 'Análise sonora completa'),
-('Alfabética', '(EI03EF08), (EI03EF06)', 'Caderno exclusivo para produção de texto...', 'Fluência e domínio ortográfico');
+('Pré-silábica', '(EI03EF09), (EI03EF01)', 'Trabalhar nome próprio, crachás, bingo de letras, alfabeto móvel, jogos de memória e atividades lúdicas de consciência fonológica.', 'Abandona o Realismo Nominal e percebe que a escrita representa a fala.'),
+('Silábica sem valor sonoro', '(EI03EF09)', 'Bater palmas para cada sílaba pronunciada, contar os pedaços das palavras e usar alfabeto móvel focado nas vogais.', 'Passa a utilizar letras que representam sons pertinentes à sílaba.'),
+('Silábica com valor sonoro', '(EI03EF03)', 'Auto ditado com alfabeto móvel a partir de imagens, brincadeira de forca, adedonha, preguicinha e encaixe de sílabas.', 'Percebe a necessidade de mais de uma letra para representar cada sílaba.'),
+('Silábico-alfabética', '(EI03EF07)', 'Cartão conflito para completar letras faltantes nas sílabas, palavras cruzadas, ordenação de sílabas e caça-palavras em textos.', 'Realiza análise sonora completa, grafando todos os fonemas da palavra.'),
+('Alfabética', '(EI03EF08), (EI03EF06)', 'Caderno exclusivo para produção e revisão de pequenos textos, uso do dicionário, banco de palavras e bingo com sílabas complexas.', 'Consolida a fluência de leitura e o domínio das convenções ortográficas.');
 """
 
-# Cria o arquivo binário .db e executa o script
 conexao = sqlite3.connect('alfabetizacao.db')
 cursor = conexao.cursor()
 cursor.executescript(script_sql)
 conexao.commit()
 conexao.close()
 
-print("Banco SQLite binário gerado com sucesso!")
+print("Banco SQLite binário gerado e atualizado com sucesso!")
