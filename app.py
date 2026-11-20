@@ -1,9 +1,22 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, send_from_directory
 from collections import Counter
+import os
 import sqlite3
 import unicodedata
 
 app = Flask(__name__)
+
+# Pasta com os materiais para download (ex.: ditado de apoio em Word)
+PASTA_MATERIAIS = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'materiais')
+
+@app.route('/ditado-apoio')
+def baixar_ditado_apoio():
+    return send_from_directory(
+        PASTA_MATERIAIS,
+        'ditado_apoio.docx',
+        as_attachment=True,
+        download_name='Ditado de Apoio - Teste da Psicogenese.docx'
+    )
 
 # Gabarito das palavras: número de sílabas, letras aceitas foneticamente e mínimo para alfabética
 GABARITO = {

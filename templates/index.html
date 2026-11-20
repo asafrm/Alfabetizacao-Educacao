@@ -59,9 +59,14 @@
                         </ol>
                     </div>
 
-                    <button type="button" class="botao" style="margin-top: 1rem;" onclick="irParaTranscricao()">
-                        Já apliquei no papel — Ir para a Transcrição
-                    </button>
+                    <div style="display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1rem;">
+                        <a class="botao botao-secundario" href="{{ url_for('baixar_ditado_apoio') }}" download>
+                            Baixar ditado de apoio (Word)
+                        </a>
+                        <button type="button" class="botao" onclick="irParaTranscricao()">
+                            Já apliquei no papel — Ir para a Transcrição
+                        </button>
+                    </div>
                 </div>
 
                 <!-- ETAPA 2: FORMULÁRIO DE TRANSCRIÇÃO -->
@@ -180,6 +185,13 @@
 
     <script>
         const MATERIAIS = [
+            {
+                tipo: "Ditado",
+                titulo: "Ditado de apoio (Word)",
+                descricao: "Texto para leitura em voz alta, palavras de maior dificuldade com a regra de cada uma e gabarito, no campo semântico dos animais.",
+                niveis: ["pré-silábica", "silábica sem valor sonoro", "silábica com valor sonoro", "silábico-alfabética", "alfabética"],
+                link: "{{ url_for('baixar_ditado_apoio') }}"
+            },
             {
                 tipo: "Atividade",
                 titulo: "Jogo do nome próprio",
