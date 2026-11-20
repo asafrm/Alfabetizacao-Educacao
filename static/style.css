@@ -83,11 +83,30 @@ p { margin: 0 0 .9rem; }
 section.secao { padding: 2rem 0; }
 
 /* ==========================================================
-   4. CARDS, FORMULÁRIO E BOTÕES
+   4. CARDS, ORIENTAÇÕES, FORMULÁRIO E BOTÕES
    ========================================================== */
 .card {
     background: var(--cor-card); border: 1px solid var(--cor-borda);
-    border-radius: var(--raio); box-shadow: var(--sombra); padding: 1.25rem;
+    border-radius: var(--raio); box-shadow: var(--sombra); padding: 1.5rem;
+}
+
+/* Tela de Orientações (Etapa 1) */
+#tela_orientacoes ul,
+#tela_orientacoes ol {
+    margin: .5rem 0 1.25rem;
+    padding-left: 1.4rem;
+}
+#tela_orientacoes li {
+    margin-bottom: .5rem;
+    color: var(--cor-texto);
+}
+#tela_orientacoes ol li {
+    background: #fbfcfd;
+    border: 1px solid var(--cor-borda);
+    border-radius: 6px;
+    padding: .5rem .85rem;
+    list-style-position: inside;
+    margin-left: -1.4rem;
 }
 
 .layout-diagnostico { display: grid; gap: 1.5rem; grid-template-columns: 1fr; }
@@ -111,19 +130,43 @@ input[aria-invalid="true"], select[aria-invalid="true"] { border-color: var(--co
 
 .erro-campo { color: var(--cor-erro); font-size: .9rem; margin-top: .25rem; min-height: 1.2em; }
 
-/* Cada pergunta do diagnóstico fica em um bloco próprio */
+/* Blocos de transcrição e checkbox */
 .pergunta { border: 1px solid var(--cor-borda); border-radius: 8px; padding: 1rem; margin-bottom: 1rem; background: #fbfcfd; }
-.pergunta label { font-weight: 600; display: block; margin-bottom: .25rem; }
+.pergunta label { font-weight: 600; display: block; margin-bottom: .4rem; }
 .pergunta .numero {
     display: inline-block; background: var(--cor-destaque); color: #fff;
     border-radius: 999px; width: 1.7rem; height: 1.7rem; text-align: center;
     font-size: .9rem; line-height: 1.7rem; margin-right: .4rem; font-weight: 700;
 }
 
+/* Alinhamento do checkbox de rabiscos */
+.pergunta input[type="checkbox"] {
+    width: 1.15rem;
+    height: 1.15rem;
+    accent-color: var(--cor-destaque);
+    vertical-align: middle;
+    margin-right: .5rem;
+    cursor: pointer;
+}
+
+/* Destaque visual para as palavras transcritas */
+#bloco_palavras input[type="text"] {
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    font-weight: 600;
+}
+#bloco_palavras input[type="text"]::placeholder {
+    text-transform: none;
+    letter-spacing: normal;
+    font-weight: 400;
+    color: #829ab1;
+}
+
 .botao {
     display: inline-block; font: inherit; font-weight: 700; cursor: pointer;
     background: var(--cor-destaque); color: #fff; border: 0; border-radius: 8px;
     padding: .8rem 1.5rem; text-decoration: none; text-align: center;
+    transition: background .15s ease;
 }
 .botao:hover { background: var(--cor-destaque-escura); }
 .botao:disabled, .botao[aria-disabled="true"] { background: #9aa5ae; cursor: not-allowed; }
