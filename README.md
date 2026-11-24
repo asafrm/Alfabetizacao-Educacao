@@ -6,7 +6,8 @@ Aplicação web de apoio pedagógico para realizar uma sondagem de escrita e apr
 
 ## Funcionalidades
 
-- Orientações para aplicação individual da sondagem de escrita.
+- Orientações para aplicação individual da sondagem de escrita no papel.
+- Download do material de apoio em Word (`.docx`) com o ditado para aplicação em sala (rota `/ditado-apoio`).
 - Transcrição das palavras escritas pela criança.
 - Opção de indicar que a produção foi composta apenas por rabiscos, garatujas ou desenhos.
 - Classificação automatizada em hipóteses de escrita:
@@ -30,12 +31,16 @@ Aplicação web de apoio pedagógico para realizar uma sondagem de escrita e apr
 ## Estrutura do projeto
 
 ```text
-Sistema Nível de Alfabetização/
+Nivel-de-Alfabetizacao/
 ├── app.py
 ├── gerar_db.py
 ├── alfabetizacao.db
-├── BNCC_EDUCAÇÃO BASICA.pdf
-├── Orientações - psicogênese.pdf
+├── Declaração_de_ética.md
+├── Explicacao_motor_de_inferencia.md
+├── LICENSE
+├── README.md
+├── materiais/
+│   └── ditado_apoio.docx
 ├── static/
 │   └── style.css
 └── templates/
@@ -52,13 +57,13 @@ Sistema Nível de Alfabetização/
 1. Clone o repositório:
 
    ```bash
-   git clone <URL_DO_REPOSITORIO>
+   git clone https://github.com/asafrm/Nivel-de-Alfabetizacao.git
    ```
 
 2. Acesse a pasta do projeto:
 
    ```bash
-   cd "Sistema Nível de Alfabetização"
+   cd Nivel-de-Alfabetizacao
    ```
 
 3. (Opcional, recomendado) Crie e ative um ambiente virtual:
@@ -101,7 +106,7 @@ Sistema Nível de Alfabetização/
 
 ## Como utilizar
 
-1. Leia as orientações apresentadas na tela inicial para aplicar a sondagem no papel.
+1. Leia as orientações apresentadas na tela inicial para aplicar a sondagem no papel (se desejar, baixe o arquivo de apoio do ditado).
 2. Dite as palavras sugeridas, sem separar artificialmente as sílabas ou corrigir a criança durante a escrita.
 3. Solicite que a criança leia o que escreveu, apontando para a produção.
 4. Na aplicação, avance para a tela de transcrição.
@@ -115,7 +120,7 @@ O motor de inferência está implementado em `app.py`. Ele normaliza as resposta
 
 As classificações das palavras são reunidas e o sistema escolhe a hipótese mais frequente (voto majoritário). Se não houver respostas consideradas, ou se a opção de rabiscos/garatujas estiver marcada, o resultado padrão é **Pré-silábica**.
 
-Após a classificação, o sistema consulta `alfabetizacao.db`, que relaciona hipóteses a habilidades BNCC e intervenções pedagógicas.
+Após a classificação, o sistema consulta `alfabetizacao.db`, que relaciona hipóteses a habilidades BNCC e intervenções pedagógicas. Para mais detalhes técnicos, consulte `Explicacao_motor_de_inferencia.md`.
 
 ## Banco de dados
 
@@ -131,9 +136,12 @@ O banco SQLite contém a tabela `niveis_alfabetizacao`, com os campos:
 
 Os dados iniciais são definidos no arquivo `gerar_db.py`.
 
-## Materiais e referências
+## Materiais, documentação e referências
 
-O projeto inclui documentos de referência relacionados à BNCC e às orientações sobre psicogênese, além de sugestões de materiais exibidas na interface.
+- `materiais/ditado_apoio.docx`: arquivo em Word com o ditado de apoio pronto para impressão e uso em sala.
+- `Explicacao_motor_de_inferencia.md`: detalhamento técnico do funcionamento do motor de inferência.
+- `Declaração_de_ética.md`: considerações éticas e pedagógicas sobre o uso da ferramenta.
+- A base teórica fundamenta-se na **Base Nacional Comum Curricular (BNCC)** e na teoria da **Psicogênese da Língua Escrita** (Emília Ferreiro e Ana Teberosky).
 
 ## Limitações conhecidas
 
